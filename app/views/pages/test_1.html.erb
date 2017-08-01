@@ -5,10 +5,15 @@
               .attr('width', '100%')
               .attr('height', '300px')
 
+  // Creates color scale
+  const rainbow = d3.scaleSequential(d3.interpolateRainbow) // algorithm to use, there are built in ones
+                    .domain([0,18]) //18 is the maximum value in my data
+
   svg.selectAll('rect') // returns all rectangles in the svg, or an empty array
       .data(dataArray) // binds array to found svg elements
       .enter() // any data not bound to a rectangle get put in this enter selection (in this case, 3)
       .append('rect') // adds a rectagle for each item in the enter selection
+        .attr('fill', (d,i) => rainbow(d))
         .attr('width', '50')
         .attr('height', (d,i) => 15*d)
         .attr('x', (d,i) => {return 60 * i})
