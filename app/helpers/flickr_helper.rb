@@ -48,7 +48,7 @@ module FlickrHelper
 
       # Sends request to the REST endpoint & requests JSON
       #url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=b352bdbfb32a1ecdb35af15c9ea0c73e&safe_search=1&content_type=1&has_geo=1&lat=-33.4456328&lon=-70.6157308&radius=25&extras=date_upload%2Cdate_taken%2Cgeo%2Cowner_name&page=36&format=json&nojsoncallback=1&auth_token=72157684360566824-dde8fff2046f3316&api_sig=873524e4009c855ee90c0d2b995a2e54"
-      url = "https://api.flickr.com/services/rest/?method=#{method_name}&format=#{request_format}&api_key=#{api_key}&media=photos&has_geo=1&content_type=1&lat=#{lat}&lon=#{lng}&radius=#{radius}&extras=geo,owner_name,date_upload,date_taken&safe_search=1&page=#{page}&nojsoncallback=1"
+      url = "https://api.flickr.com/services/rest/?method=#{method_name}&format=#{request_format}&api_key=#{api_key}&media=photos&has_geo=1&content_type=1&lat=#{lat}&lon=#{lng}&radius=#{radius}&extras=geo,owner_name,date_upload,date_taken,url_z&safe_search=1&page=#{page}&nojsoncallback=1"
       url += "&min_taken_date=#{months[start_month]}&max_taken_date=#{months[start_month+1]}" if start_month
       url += "&license=#{license}" if license
       puts "Calling #{url}"
