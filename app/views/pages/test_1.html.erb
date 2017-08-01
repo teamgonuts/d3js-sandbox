@@ -1,9 +1,9 @@
 <script>
-  const dataArray = [5,11,18]
+  let dataArray = [5,11,18]
    // Creating our SVG canvas
   let svg = d3.select('body').append('svg')
               .attr('width', '100%')
-              .attr('height', '100vh')
+              .attr('height', '300px')
 
   svg.selectAll('rect') // returns all rectangles in the svg, or an empty array
       .data(dataArray) // binds array to found svg elements
@@ -40,6 +40,7 @@
       })
       .attr('cy', (d,i) => 150)
 
+
   newX = 600 // horizontal offset
   svg.selectAll('line')
     .data(dataArray)
@@ -51,4 +52,32 @@
       .attr('y1', 300)
       .attr('x2', (d,i) => (d*20) + newX)
       .attr('y2', (d,i) => (300-(i*100)))
+
+  // New lines
+  svg = d3.select('body').append('svg')
+              .attr('width', '100%')
+              .attr('height', '300px')
+
+  svg.append('text')
+      .text('Hey dude')
+      .attr('x', 20)
+      .attr('y', 80)
+
+  // New lines for generator
+  svg = d3.select('body').append('svg')
+              .attr('width', '100%')
+              .attr('height', '300px')
+
+  // random data elements that will be fed into our generator
+  dataArray = [{x:10, y:5},{x:20, y:58},{x:30, y:45},{x:60, y:15},{x:80, y:69}]
+
+  let lineGenerator = d3.line() // Not an SVG line
+                        .x((d,i) => d.x*6)
+                        .y((d,i) => d.y*4)
+                        .curve(d3.curveCardinal) // creates curved instead of straight lines
+  svg.append('path')
+      .attr('d', lineGenerator(dataArray)) // d = required data element
+      .attr('fill', 'none') // defaults to filled shape
+      .attr('stroke', 'red')
+      .attr('stroke-width', '3px')
 </script>
