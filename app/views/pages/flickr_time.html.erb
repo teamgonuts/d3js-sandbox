@@ -1,0 +1,75 @@
+<script>
+  // let i = 1
+  // gon.dates.forEach((date) => {
+  //   console.log('old', date)
+  // })
+
+  // Create time series values
+  const baseDate = Date.parse('2016-1-1 00:00')
+  let timeSeriesDates = [baseDate.toString('HH:mm')]
+  let i = 1
+  while(i < 96) {
+    newDate = baseDate.add(15).minutes()
+    timeSeriesDates.push(newDate.toString('HH:mm'))
+    i += 1
+  }
+
+  const height = 300
+  const width = 1000
+  const margin = {left: 50, right: 50, top: 50, bottom: 0}
+
+  // REPLACE WITH FREQUENCY
+  const dataArray = d3.range(96).map((d) => Math.random() * height)
+  console.log(dataArray)
+
+  // create scale for axis
+  let y = d3.scaleLinear()
+            .domain([0,d3.max(dataArray)])
+            .range([height,0]) // invert this so I don't have to subtract later
+
+  const parseDate = d3.timeParse('%H:%M') // creating a parser tool, puts dates in that format
+
+  let x = d3.scaleTime()
+            .domain(d3.extent(timeSeriesDates, (d) => parseDate(d))) // extent is a function that returns an array [min, max]
+            .range([0, width]) // actual screen pixels
+
+  // create axis generator
+  const yAxis = d3.axisLeft(y)
+  const xAxis = d3.axisBottom(x).ticks(24).tickFormat(d3.timeFormat("%H:%M"))
+
+  // area generator
+  const area = d3.area()
+                .x((d,i) => x(parseDate(timeSeriesDates[i])))
+                .y0(height)
+                .y1((d,i) => y(d))
+                .curve(d3.curveCardinal)
+
+  //console.log('area path', area(dataArray))
+
+  // Drawing this shit, add the base SVG
+  const svg = d3.select('body').append('svg')
+              .attr('height', '100vh')
+              .attr('width', '100%')
+
+
+
+  // chart and axis will be grouped and positioned together
+  let chartGroup = svg.append('g')
+                      .attr('transform', `translate(${margin.left}, ${margin.right})`)
+
+  // Add the line from the area geneator
+  chartGroup.append('path')
+            .attr('d', area(dataArray))
+
+  // Add the yAxis
+  chartGroup.append('g') // axis are groups
+            .attr('class', 'axis y')
+            .call(yAxis) // adding y axis to chart
+
+  // Add the xAxis
+  chartGroup.append('g') // axis are groups
+            .attr('class', 'axis x')
+            .attr('transform', `translate(0, ${height})`)
+            .call(xAxis) // adding y axis to chart
+
+</script>

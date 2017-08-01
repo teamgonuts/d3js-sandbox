@@ -24,6 +24,7 @@ gem 'coffee-rails', '~> 4.2'
 # For calling API URLs
 gem 'httparty', '~> 0.14.0'
 
+gem 'gon', '~> 6.1' #see https://github.com/gazay/gon
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
