@@ -14,7 +14,7 @@
         .attr('x', (d,i) => {return 60 * i})
         .attr('y', (d,i) => 300-(15*d)) // inverts the bar graph. 300 px is bottom of graph, and you build bar from top to bottom
 
-  let newX = 300 // horizontal offset for circles
+  let newX = 200 // horizontal offset for circles
   svg.selectAll('circle')
       .data(dataArray)
       .enter()
@@ -26,7 +26,7 @@
         })
         .attr('cy', (d,i) => 150)
 
-  newX = 600 // horizontal offset for ellipses
+  newX = 400 // horizontal offset for ellipses
   svg.selectAll('ellipse')
     .data(dataArray)
     .enter()
@@ -39,4 +39,16 @@
         return newX
       })
       .attr('cy', (d,i) => 150)
+
+  newX = 600 // horizontal offset
+  svg.selectAll('line')
+    .data(dataArray)
+    .enter()
+    .append('line')
+      .attr('stroke', 'blue')
+      .attr('stroke-width', 2)
+      .attr('x1', newX)
+      .attr('y1', 300)
+      .attr('x2', (d,i) => (d*20) + newX)
+      .attr('y2', (d,i) => (300-(i*100)))
 </script>
