@@ -1,1 +1,16 @@
-<h1> Hi I'm a working test</h1>
+<script>
+  const dataArray = [5,11,18]
+   // Creating our SVG canvas
+  let svg = d3.select('body').append('svg')
+              .attr('width', '500px')
+              .attr('height', '500px')
+
+  svg.selectAll('rect') // returns all rectangles in the svg, or an empty array
+      .data(dataArray) // binds array to found svg elements
+      .enter() // any data not bound to a rectangle get put in this enter selection (in this case, 3)
+      .append('rect') // adds a rectagle for each item in the enter selection
+        .attr('width', '50')
+        .attr('height', (d,i) => 15*d)
+        .attr('x', (d,i) => {return 60 * i})
+        .attr('y', (d,i) => 300-(15*d)) // inverts the bar graph. 300 px is bottom of graph, and you build bar from top to bottom
+</script>
