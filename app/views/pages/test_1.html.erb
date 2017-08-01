@@ -2,8 +2,8 @@
   const dataArray = [5,11,18]
    // Creating our SVG canvas
   let svg = d3.select('body').append('svg')
-              .attr('width', '500px')
-              .attr('height', '500px')
+              .attr('width', '100%')
+              .attr('height', '100vh')
 
   svg.selectAll('rect') // returns all rectangles in the svg, or an empty array
       .data(dataArray) // binds array to found svg elements
@@ -13,4 +13,30 @@
         .attr('height', (d,i) => 15*d)
         .attr('x', (d,i) => {return 60 * i})
         .attr('y', (d,i) => 300-(15*d)) // inverts the bar graph. 300 px is bottom of graph, and you build bar from top to bottom
+
+  let newX = 300 // horizontal offset for circles
+  svg.selectAll('circle')
+      .data(dataArray)
+      .enter()
+      .append('circle')
+        .attr('r', (d,i) => d*2)
+        .attr('cx', (d,i) => {
+          newX += (d*4) + (10) // size of circle (double the radius) + offset for each circle
+          return newX
+        })
+        .attr('cy', (d,i) => 150)
+
+  newX = 600 // horizontal offset for ellipses
+  svg.selectAll('ellipse')
+    .data(dataArray)
+    .enter()
+    .append('ellipse')
+      .attr('class', 'ellipsy')
+      .attr('rx', (d,i) => 30)
+      .attr('ry', (d,i) => d*2)
+      .attr('cx', (d,i) => {
+        newX += (30*2) + (10) // size of circle + offset for each circle
+        return newX
+      })
+      .attr('cy', (d,i) => 150)
 </script>
