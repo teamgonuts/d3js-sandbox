@@ -10,9 +10,9 @@ class CreateFlickrPhotos < ActiveRecord::Migration[5.0]
       t.decimal :lng, null: false
       t.string :accuracy
       t.string :place_id
-      t.string :url_z, null: false
-      t.string :height_z, null: false
-      t.string :width_z, null: false
+      t.string :url_z
+      t.string :height_z
+      t.string :width_z
       t.string :date_uploaded
       t.string :date_taken_string
       t.datetime :date_taken
