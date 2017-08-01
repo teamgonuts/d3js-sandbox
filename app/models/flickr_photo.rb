@@ -1,0 +1,2 @@
+class FlickrPhoto < ApplicationRecord
+end
