@@ -1,7 +1,7 @@
 <style>
 .area {
   fill: url(#temperature-gradient);
-  stroke-width: 05px;
+  stroke-width: 1px;
 }
 
 </style>
@@ -65,10 +65,11 @@
       .attr("x2", width).attr("y2", 0)
     .selectAll("stop")
       .data([
-        {offset: "0%", color: "#550090"},
-        {offset: "55%", color: "#e1de02"},
-        {offset: "65%", color: "#e1de02"},
-        {offset: "100%", color: "#550090"}
+        {offset: "20%", color: "#550090"},
+        {offset: "40%", color: "#e1de02"},
+        {offset: "58%", color: "#f5f21d"},
+        {offset: "75%", color: "#e1de02"},
+        {offset: "88%", color: "#550090"}
       ])
     .enter().append("stop")
       .attr("offset", function(d) { return d.offset; })
