@@ -1,0 +1,102 @@
+<style>
+.area {
+  fill: url(#temperature-gradient);
+  stroke-width: 1px;
+}
+
+.axis.y {
+  text-anchor: start;
+}
+
+</style>
+<script>
+  // let i = 1
+  // gon.dates.forEach((date) => {
+  //   console.log('old', date)
+  // })
+
+  // Create time series values
+  const baseDate = Date.parse('2016-1-1 00:00')
+  let timeSeriesDates = [baseDate.toString('HH:mm')]
+  let i = 1
+  while(i < 24) {
+    newDate = baseDate.add(1).hour()
+    timeSeriesDates.push(newDate.toString('HH:mm'))
+    i += 1
+  }
+
+  const height = window.innerHeight - 40
+  const width = window.innerWidth
+
+  const margin = {left: 0, right: 0, top: 20, bottom: 20}
+
+  // create scale for axis
+  let x = d3.scaleLinear()
+            .domain([0,d3.max(d3.values(gon.frequency_map))])
+            .range([0,width]) // invert this so I don't have to subtract later
+
+  const parseDate = d3.timeParse('%H:%M') // creating a parser tool, puts dates in that format
+
+  let y = d3.scaleTime()
+            .domain(d3.extent(timeSeriesDates, (d) => parseDate(d))) // extent is a function that returns an array [min, max]
+            .range([0, height]) // actual screen pixels
+
+  // create axis generator
+  const yAxis = d3.axisRight(y).ticks(24).tickFormat(d3.timeFormat("%H:%M"))
+  const xAxis = d3.axisBottom(x)
+
+  // area generator
+  const area = d3.area()
+                .x((d,i) => x(gon.frequency_map[d]))
+                .y0(0)
+                .y1((d,i) => y(parseDate(timeSeriesDates[i])))
+                .curve(d3.curveCardinal)
+
+
+  // Drawing this shit, add the base SVG
+  const svg = d3.select('body').append('svg')
+              .attr('height', '100vh')
+              .attr('width', '100%')
+
+
+  // chart and axis will be grouped and positioned together
+  let chartGroup = svg.append('g')
+                      .attr('transform', `translate(${margin.left}, ${margin.top})`)
+
+  chartGroup.append("linearGradient")
+      .attr("id", "temperature-gradient")
+      .attr("gradientUnits", "userSpaceOnUse")
+      .attr("x1", 0).attr("y1", 0)
+      .attr("x2", width).attr("y2", 0)
+    .selectAll("stop")
+      .data([
+        {offset: "20%", color: "#550090"},
+        {offset: "40%", color: "#e1de02"},
+        {offset: "58%", color: "#f5f21d"},
+        {offset: "75%", color: "#e1de02"},
+        {offset: "88%", color: "#550090"}
+      ])
+    .enter().append("stop")
+      .attr("offset", function(d) { return d.offset; })
+      .attr("stop-color", function(d) { return d.color; })
+  console.log('frequency_map', gon.frequency_map)
+  // Add the line from the area geneator
+  chartGroup.append('path')
+            .attr('d', area(d3.range(24)))
+            .attr('class', 'area')
+
+  // // Add the yAxis
+  chartGroup.append('g') // axis are groups
+            .attr('class', 'axis y')
+            .attr('transform', `translate(0, 0)`)
+            .call(yAxis) // adding y axis to chart
+
+  // // Add the xAxis
+  // chartGroup.append('g') // axis are groups
+  //           .attr('class', 'axis x')
+  //           .attr('transform', `translate(0, ${height})`)
+  //           .call(xAxis) // adding y axis to chart
+
+
+
+</script>
