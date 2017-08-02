@@ -34,7 +34,7 @@
     i += 1
   }
 
-  const height = 200
+  const height = 100
   const width = window.innerHeight
   const margin = {left: 0, right: 0, top: 20, bottom: 20}
 
@@ -69,6 +69,7 @@
   const svg = d3.select('body').append('svg')
               .attr('height', '100vh')
               .attr('width', '100%')
+              .attr('class', 'black-gradient')
 
 
   // chart and axis will be grouped and positioned together
@@ -95,7 +96,7 @@
   // Add the line from the area geneator
   chartGroup.append('path')
             .attr('d', area(d3.range(24)))
-            .attr('transform', 'translate(200,0) rotate(90)')
+            .attr('transform', `translate(${height},0) rotate(90)`)
             .attr('class', 'area')
 
   // Add the yAxis
