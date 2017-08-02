@@ -1,11 +1,8 @@
 <style>
 .area {
   fill: url(#temperature-gradient);
+  opacity:0.7;
   stroke-width: 1px;
-}
-
-.axis.y {
-  text-anchor: start;
 }
 
 </style>
@@ -25,31 +22,30 @@
     i += 1
   }
 
-  const height = window.innerHeight - 40
-  const width = window.innerWidth
-
-  const margin = {left: 0, right: 0, top: 20, bottom: 20}
+  const height = 200
+  const width = innerHeight
+  const margin = {left: 0, right: 0, top: 0, bottom: 0}
 
   // create scale for axis
-  let x = d3.scaleLinear()
+  let y = d3.scaleLinear()
             .domain([0,d3.max(d3.values(gon.frequency_map))])
-            .range([0,width]) // invert this so I don't have to subtract later
+            .range([height,0]) // invert this so I don't have to subtract later
 
   const parseDate = d3.timeParse('%H:%M') // creating a parser tool, puts dates in that format
 
-  let y = d3.scaleTime()
+  let x = d3.scaleTime()
             .domain(d3.extent(timeSeriesDates, (d) => parseDate(d))) // extent is a function that returns an array [min, max]
-            .range([0, height]) // actual screen pixels
+            .range([0, width]) // actual screen pixels
 
   // create axis generator
-  const yAxis = d3.axisRight(y).ticks(24).tickFormat(d3.timeFormat("%H:%M"))
-  const xAxis = d3.axisBottom(x)
+  const yAxis = d3.axisLeft(y)
+  const xAxis = d3.axisBottom(x).ticks(24).tickFormat(d3.timeFormat("%H:%M"))
 
   // area generator
   const area = d3.area()
-                .x((d,i) => x(gon.frequency_map[d]))
-                .y0(0)
-                .y1((d,i) => y(parseDate(timeSeriesDates[i])))
+                .x((d,i) => x(parseDate(timeSeriesDates[i])))
+                .y0(height)
+                .y1((d,i) => y(gon.frequency_map[d]))
                 .curve(d3.curveCardinal)
 
 
@@ -61,7 +57,7 @@
 
   // chart and axis will be grouped and positioned together
   let chartGroup = svg.append('g')
-                      .attr('transform', `translate(${margin.left}, ${margin.top})`)
+                      .attr('transform', `translate(${margin.left}, ${margin.right})`)
 
   chartGroup.append("linearGradient")
       .attr("id", "temperature-gradient")
@@ -83,15 +79,15 @@
   // Add the line from the area geneator
   chartGroup.append('path')
             .attr('d', area(d3.range(24)))
+            .attr('transform', 'translate(200,0) rotate(90)')
             .attr('class', 'area')
 
-  // // Add the yAxis
+  // Add the yAxis
   chartGroup.append('g') // axis are groups
             .attr('class', 'axis y')
-            .attr('transform', `translate(0, 0)`)
             .call(yAxis) // adding y axis to chart
 
-  // // Add the xAxis
+  // Add the xAxis
   // chartGroup.append('g') // axis are groups
   //           .attr('class', 'axis x')
   //           .attr('transform', `translate(0, ${height})`)

@@ -3,18 +3,18 @@ class FlickrPhoto < ApplicationRecord
 
   def self.pull_photos
     include FlickrHelper
-    city_name = 'New York'
+    city_name = 'Cape Town'
     puts "Starting pull for #{city_name}"
 
     # iterating through months
     (1..12).each do |m|
-      results = FlickrAPI.get_photos('medium', 40.7940994, -73.9659373, 1, 25, m)
+      results = FlickrAPI.get_photos('medium', -33.9855835, 18.4224594, 1, 25, m)
       total_pages = results.dig('photos', 'pages')
       puts "Current page #{results.dig('photos', 'page')} of #{total_pages}"
 
       # Iterating through pages in results
       (1..[40,total_pages].min).each do |page|
-        results = FlickrAPI.get_photos('medium', 40.7940994, -73.9659373, page, 25, m) #lat/lng is santiago
+        results = FlickrAPI.get_photos('medium', -33.9855835, 18.4224594, page, 25, m) #lat/lng is santiago
         puts "Current page #{results.dig('photos', 'page')} of #{total_pages}"
         puts "...saving #{results.dig('photos', 'perpage')} photos"
         #puts results['photos']['photo']
