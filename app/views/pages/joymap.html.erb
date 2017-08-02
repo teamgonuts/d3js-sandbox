@@ -35,16 +35,18 @@ function row(d) {
 
 d3.queue()
     .defer(d3.csv, '/joymap/population-grid.csv', row)
+    //.defer(d3.json, '/joymap/ca.json')
     .defer(d3.json, '/joymap/wisconsin.json')
     .await(ready);
 
 function ready(error, data, wisconsin) {
     if (error) throw error;
+    console.log('wisconsin', wisconsin)
 
     var svg = d3.select('svg'),
         width = +svg.attr('width'),
         height = +svg.attr('height'),
-        extent = [[0, 20],[width, height - 20]];
+        extent = [[0, 20],[width, height - 20]]
 
     var projection = d3.geoIdentity()
         .reflectY(true)
@@ -70,7 +72,7 @@ function ready(error, data, wisconsin) {
     var curve = d3.curveCardinal.tension(0);
 
     var line = d3.line()
-        .x(function(d) { return x(d.x); })
+        .x(function(d) { return (x(d.x)); })
         .y(function(d) { return dy(d.population); })
         .curve(curve);
 
