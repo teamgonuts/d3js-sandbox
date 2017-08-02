@@ -4,8 +4,12 @@ class PagesController < ApplicationController
   end
   def test_2
   end
+
+  def joymap
+  end
+
   def flickr_time
-    photos = FlickrPhoto.where(city_name: 'Santiago').select(:date_taken).group_by {|p| p.date_taken.hour}
+    photos = FlickrPhoto.where(city_name: 'New York').select(:date_taken).group_by {|p| p.date_taken.hour}
     gon.frequency_map = {
       0 => photos[0].size,
       1 => photos[1].size,

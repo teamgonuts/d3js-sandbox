@@ -65,10 +65,10 @@
       .attr("x2", width).attr("y2", 0)
     .selectAll("stop")
       .data([
-        {offset: "0%", color: "steelblue"},
-        {offset: "55%", color: "#fdbb2d"},
-        {offset: "65%", color: "#fdbb2d"},
-        {offset: "100%", color: "steelblue"}
+        {offset: "0%", color: "#550090"},
+        {offset: "55%", color: "#e1de02"},
+        {offset: "65%", color: "#e1de02"},
+        {offset: "100%", color: "#550090"}
       ])
     .enter().append("stop")
       .attr("offset", function(d) { return d.offset; })
