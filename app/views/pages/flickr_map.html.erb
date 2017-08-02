@@ -5,6 +5,18 @@
   stroke-width: 1px;
 }
 
+.axis.y line,
+.axis.y path{
+  stroke: white;
+  stroke-width: 2px;
+}
+
+.axis.y text {
+  fill: white;
+  text-shadow: 1px 1px 3px black;
+  font-size: 18px;
+}
+
 </style>
 <script>
   // let i = 1
@@ -23,8 +35,8 @@
   }
 
   const height = 200
-  const width = innerHeight
-  const margin = {left: 0, right: 0, top: 0, bottom: 0}
+  const width = window.innerHeight
+  const margin = {left: 0, right: 0, top: 20, bottom: 20}
 
   // create scale for axis
   let y = d3.scaleLinear()
@@ -37,9 +49,13 @@
             .domain(d3.extent(timeSeriesDates, (d) => parseDate(d))) // extent is a function that returns an array [min, max]
             .range([0, width]) // actual screen pixels
 
+  const yAxisHeight = window.innerHeight - 40
+  let yAxisScale = d3.scaleTime()
+                  .domain(d3.extent(timeSeriesDates, (d) => parseDate(d))) // extent is a function that returns an array [min, max]
+                  .range([0, yAxisHeight]) // actual screen pixels
+
   // create axis generator
-  const yAxis = d3.axisLeft(y)
-  const xAxis = d3.axisBottom(x).ticks(24).tickFormat(d3.timeFormat("%H:%M"))
+  const yAxis = d3.axisRight(yAxisScale).ticks(24).tickFormat(d3.timeFormat("%-I %p"))
 
   // area generator
   const area = d3.area()
@@ -57,7 +73,7 @@
 
   // chart and axis will be grouped and positioned together
   let chartGroup = svg.append('g')
-                      .attr('transform', `translate(${margin.left}, ${margin.right})`)
+                      .attr('transform', `translate(${margin.left}, 0)`)
 
   chartGroup.append("linearGradient")
       .attr("id", "temperature-gradient")
@@ -83,8 +99,9 @@
             .attr('class', 'area')
 
   // Add the yAxis
-  chartGroup.append('g') // axis are groups
+  svg.append('g') // axis are groups
             .attr('class', 'axis y')
+            .attr('transform', `translate(5,${margin.top})`)
             .call(yAxis) // adding y axis to chart
 
   // Add the xAxis
