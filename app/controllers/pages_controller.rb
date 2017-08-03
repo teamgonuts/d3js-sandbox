@@ -8,6 +8,12 @@ class PagesController < ApplicationController
   def joymap
   end
 
+  def svg_map
+  end
+
+  def geojson_map
+  end
+
   def flickr_hour
     photos = FlickrPhoto.where(city_name: 'Cape Town').select(:date_taken).group_by {|p| p.date_taken.hour}
     gon.frequency_map = {
@@ -86,4 +92,6 @@ class PagesController < ApplicationController
       12 => photos[12].size
     }
   end
+
+
 end
