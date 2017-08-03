@@ -2344,6 +2344,9 @@
 
 
   svg.append('path')
+            .attr('d', geoPath(usGeo))
+            .attr('transform', `translate(0, 0)`)
+  svg.append('path')
             .attr('d', geoPath(chileGeo))
             .attr('transform', `translate(0, 0)`)
 
