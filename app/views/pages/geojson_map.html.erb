@@ -12,6 +12,7 @@
   const margin = {left: 50, right: 50, top: 50, bottom: 50}
 
   const geoPath = d3.geoPath()
+                    .projection(d3.geoMercator())
 
   const chileGeo = { "type": "FeatureCollection",
     "features": [
@@ -2337,8 +2338,8 @@
 
     // Base SVG
   const svg = d3.select('body').append('svg')
-              .attr('height', '500')
-              .attr('width', '500')
+              .attr('height', '100vh')
+              .attr('width', '100%')
               .call(zoom)
 
 
