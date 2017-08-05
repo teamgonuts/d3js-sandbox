@@ -189,7 +189,7 @@ circle.photo {
 
   // Load the data
   d3.queue()
-    .defer(d3.json, '/nyc/manhattan.geojson')
+    .defer(d3.json, '/nyc/manhattan-outline.geojson')
     .defer(d3.json, '/nyc/new-york-photos-park.json')
     .await(drawMap)
 
