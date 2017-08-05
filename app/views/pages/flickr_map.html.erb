@@ -175,7 +175,7 @@ circle.photo {
       // const bottomTime = baseDate.add(hoursToShow).hours().toString('HH:mm')
       // console.log(`showing: ${topTime}-${bottomTime}`)
       //
-      //drawCircles()
+      drawCircles()
     }
 
     // Returns an array of the photos within the date range
@@ -185,7 +185,7 @@ circle.photo {
       const seg = Math.floor(scrollTop / minHeight) // number of minutes to add
 
       good = photos.photos.filter((p) => {
-        return (p.hour < 12)
+        return (p.hour*60 < seg)
       })
 
       console.log('validPhotos.length', good.length)
