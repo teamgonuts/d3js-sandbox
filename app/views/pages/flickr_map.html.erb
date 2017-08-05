@@ -17,6 +17,11 @@
   font-size: 18px;
 }
 
+.map-group {
+  fill: white;
+  stroke: black;
+}
+
 </style>
 <script>
   // let i = 1
@@ -75,6 +80,7 @@
               .attr('class', 'black-gradient')
 
 
+
   // chart and axis will be grouped and positioned together
   let chartGroup = svg.append('g')
                       .attr('transform', `translate(${margin.left}, 0)`)
@@ -104,17 +110,46 @@
             .attr('transform', `translate(${height},0) rotate(90)`)
             .attr('class', 'area')
 
-  // Add the yAxis
+    // Add the yAxis
   svg.append('g') // axis are groups
             .attr('class', 'axis y')
             .attr('transform', `translate(5,${margin.top})`)
             .call(yAxis) // adding y axis to chart
 
-  // Add the xAxis
-  // chartGroup.append('g') // axis are groups
-  //           .attr('class', 'axis x')
-  //           .attr('transform', `translate(0, ${height})`)
-  //           .call(xAxis) // adding y axis to chart
+
+
+  // Map of manhattan
+  const mapGroup = svg.append('g')
+                      .attr('transform', `translate(${height + margin.left}, 0)`)
+                      .attr('class', 'map-group')
+
+  //  // Define Zoom Function Event Listener
+  // function zoomFunction() {
+  //     d3.selectAll("path")
+  //         .attr("transform", d3.event.transform);
+  // }
+
+  // // Define Zoom Behavior
+  // const zoom = d3.zoom()
+  //     .scaleExtent([0.2, 10])
+  //     .on("zoom", zoomFunction);
+  //
+
+  d3.json('/nyc/manhattan.geojson', (error, data) => {
+    const mapMaxWidth = 500
+    const mapMarginRight = 200
+    const projection = d3.geoMercator()
+                        .rotate([0, 0, 100])
+                        .fitExtent([[0, margin.top], [mapMaxWidth, window.innerHeight - margin.top]], data)
+
+
+    const geoPath = d3.geoPath()
+                    .projection(projection)
+
+    mapGroup.append('path')
+              .attr('d', geoPath(data))
+              .attr('transform', `translate(${window.innerWidth - mapMaxWidth - mapMarginRight}, 0)`)
+  })
 
 
 
