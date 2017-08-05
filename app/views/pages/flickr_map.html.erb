@@ -122,19 +122,6 @@ circle.photo {
             .attr('transform', `translate(5,${margin.top})`)
             .call(yAxis) // adding y axis to chart
 
-
-   // Define Zoom Function Event Listener
-  function zoomFunction() {
-      d3.selectAll("path.geo")
-          .attr("transform", d3.event.transform);
-  }
-
-  // Define Zoom Behavior
-  const zoom = d3.zoom()
-      .scaleExtent([0.2, 10])
-      .on("zoom", zoomFunction);
-
-
   const drawMap = (error, geo, photos) => {
     const mapMaxWidth = 500
     const groupMarginLeft = 500
@@ -165,10 +152,6 @@ circle.photo {
 
 
     // Adding the circles
-    let a = {lng: -73.968285, lat: 40.785091}
-    let b = {lng: -74.004753, lat: 40.747964}
-    let coor = projection([-73.968285, 40.785091])
-    let gcoor = projection([b.lng, b.lat])
     mapGroup.selectAll('circle.photo')
             .data(photos.photos)
             .enter().append('circle')
@@ -179,17 +162,6 @@ circle.photo {
                     .attr('class', 'photo')
                     .attr('transform', `translate(${groupMarginLeft}, 0)`)
 
-
-    // console.log(' projection([73.9654, 40.7829])[0]',  projection([73.9654, 40.7829])[0])
-    // console.log(' projection([73.9654, 40.7829])[1]',  projection([73.9654, 40.7829])[1])
-    // // LNG FIRST, THEN LAT
-    // //
-    // let coor = projection([-73.968285, 40.785091])
-    // mapGroup.append('circle')
-    //                 .attr('cx', coor[0])
-    //                 .attr('cy', coor[1])
-    //                 .attr('r', 10)
-    //                 .attr('class', 'city')
   }
 
 
