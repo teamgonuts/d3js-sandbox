@@ -38,24 +38,22 @@ circle.photo {
 
 </style>
 <script>
-  // let i = 1
-  // gon.dates.forEach((date) => {
-  //   console.log('old', date)
-  // })
-
   // Create time series values
-  const baseDate = Date.parse('2016-1-1 05:00')
+  let baseDate = Date.parse('2016-1-1 05:00')
   let timeSeriesDates = [baseDate.toString('yyyy-MM-dd HH:mm')]
   let i = 1
-  while(i < 24) {
+  while(i < 25) {
     newDate = baseDate.add(1).hour()
     timeSeriesDates.push(newDate.toString('yyyy-MM-dd HH:mm'))
     i += 1
   }
 
-
   const height = 120
-  const width = 24*(window.innerHeight/2)
+  const hoursToShow = 2 // number of hours to show on one screen height
+  const hourHeight = (window.innerHeight/hoursToShow)
+  const vizHeight = 24*hourHeight
+  const width = vizHeight
+
   const margin = {left: 0, right: 0, top: 20, bottom: 20}
 
   // create scale for axis
@@ -77,7 +75,8 @@ circle.photo {
                   .range([0, yAxisHeight]) // actual screen pixels
 
   // create axis generator
-  const yAxis = d3.axisRight(yAxisScale).ticks(48).tickFormat(d3.timeFormat("%-I:%M %p"))
+  const timeFormatter = d3.timeFormat("%-I:%M %p")
+  const yAxis = d3.axisRight(yAxisScale).ticks(48).tickFormat(timeFormatter)
 
   // area generator
   const area = d3.area()
@@ -89,7 +88,7 @@ circle.photo {
 
   // Drawing this shit, add the base SVG
   const svg = d3.select('body').append('svg')
-              .attr('height', (24*(window.innerHeight/2)))
+              .attr('height', vizHeight)
               .attr('width', '100%')
               .attr('class', 'black-gradient')
 
@@ -129,6 +128,17 @@ circle.photo {
             .attr('class', 'axis y')
             .attr('transform', `translate(5,${margin.top})`)
             .call(yAxis) // adding y axis to chart
+
+  // Function called when zoom changes
+  const minHeight = hourHeight/60 // height in pixels of one minute
+  window.onscroll = (e) => {
+    // console.log('window scrolled', $(window).scrollTop())
+    let baseDate = Date.parse('2016-1-1 05:00') // reset
+    const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop
+
+    const seg = Math.floor(scrollTop / minHeight) // number of minutes to add
+    console.log(`top time: ${baseDate.add(seg).minutes().toString('HH:mm')}`)
+  }
 
   const drawMap = (error, geo, photos) => {
     const mapMaxWidth = 500
