@@ -22,6 +22,14 @@
   stroke: black;
 }
 
+.map-group-container {
+  position: fixed;
+  top:0;
+  bottom:0;
+  right:0;
+  left: 500px;
+}
+
 circle.photo {
   fill: red;
   opacity: 0.5;
@@ -47,7 +55,7 @@ circle.photo {
 
 
   const height = 120
-  const width = window.innerHeight
+  const width = 24*(window.innerHeight/2)
   const margin = {left: 0, right: 0, top: 20, bottom: 20}
 
   // create scale for axis
@@ -63,13 +71,13 @@ circle.photo {
             .domain(d3.extent(timeSeriesDates, (d) => parseDate(d))) // extent is a function that returns an array [min, max]
             .range([0, width]) // actual screen pixels
 
-  const yAxisHeight = window.innerHeight - 40
+  const yAxisHeight = (width) - 40
   let yAxisScale = d3.scaleTime()
                   .domain(d3.extent(timeSeriesDates, (d) => parseDate(d))) // extent is a function that returns an array [min, max]
                   .range([0, yAxisHeight]) // actual screen pixels
 
   // create axis generator
-  const yAxis = d3.axisRight(yAxisScale).ticks(24).tickFormat(d3.timeFormat("%-I %p"))
+  const yAxis = d3.axisRight(yAxisScale).ticks(48).tickFormat(d3.timeFormat("%-I:%M %p"))
 
   // area generator
   const area = d3.area()
@@ -81,7 +89,7 @@ circle.photo {
 
   // Drawing this shit, add the base SVG
   const svg = d3.select('body').append('svg')
-              .attr('height', '100vh')
+              .attr('height', (24*(window.innerHeight/2)))
               .attr('width', '100%')
               .attr('class', 'black-gradient')
 
@@ -124,11 +132,15 @@ circle.photo {
 
   const drawMap = (error, geo, photos) => {
     const mapMaxWidth = 500
-    const groupMarginLeft = 500
+    const groupMarginLeft = 0
+
+    const mapSvg = d3.select('.map-group-container').append('svg')
+                      .attr('height', '100%')
+                      .attr('width', '100%')
 
     // Map of manhattan container
-    const mapGroup = svg.append('g')
-                      .attr('transform', `translate(${height + margin.left}, 0)`)
+    const mapGroup = mapSvg.append('g')
+                      .attr('transform', `translate(0, 0)`)
                       .attr('class', 'map-group')
 
     const projection = d3.geoMercator()
@@ -165,6 +177,7 @@ circle.photo {
   }
 
 
+
   // Load the data
   d3.queue()
     .defer(d3.json, '/nyc/manhattan-outline.geojson')
@@ -173,3 +186,6 @@ circle.photo {
 
 
 </script>
+
+<div class="map-group-container">
+</div>
