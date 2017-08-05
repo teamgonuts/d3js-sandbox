@@ -1846,7 +1846,16 @@
 
 
 
+  // Define Zoom Function Event Listener
+  function zoomFunction() {
+      d3.selectAll("path")
+          .attr("transform", d3.event.transform);
+  }
 
+  // Define Zoom Behavior
+  const zoom = d3.zoom()
+      .scaleExtent([0.2, 10])
+      .on("zoom", zoomFunction);
 
     // Base SVG
   const svg = d3.select('body').append('svg')

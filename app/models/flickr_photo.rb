@@ -47,4 +47,23 @@ class FlickrPhoto < ApplicationRecord
       end
     end
   end
+
+  # returns json with each photo in a given city
+  # each item in the array has tempHash city date, lat, and lng
+  def self.generate_city_json(city = 'New York')
+    require 'json'
+
+    photos = [] # array of hashs
+    FlickrPhoto.select(:id, :lat, :lng, :date_taken).where(city_name: city).find_each do |p|
+      photos << {lat: p.lat, lng: p.lng, date_taken: p.date_taken}
+    end
+
+    tempHash = {
+        "photos" => photos,
+        "count" => FlickrPhoto.where(city_name: city).count
+    }
+    File.open("public/#{city.parameterize}-photos.json","w") do |f|
+      f.write(tempHash.to_json)
+    end
+  end
 end
