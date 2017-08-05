@@ -131,13 +131,15 @@ circle.photo {
 
   // Function called when zoom changes
   const minHeight = hourHeight/60 // height in pixels of one minute
+
   window.onscroll = (e) => {
-    // console.log('window scrolled', $(window).scrollTop())
-    let baseDate = Date.parse('2016-1-1 05:00') // reset
+    baseDate = Date.parse('2016-1-1 05:00') // reset
     const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop
 
     const seg = Math.floor(scrollTop / minHeight) // number of minutes to add
-    console.log(`top time: ${baseDate.add(seg).minutes().toString('HH:mm')}`)
+    const topTime = baseDate.add(seg).minutes().toString('HH:mm')
+    const bottomTime = baseDate.add(hoursToShow).hours().toString('HH:mm')
+    console.log(`showing: ${topTime}-${bottomTime}`)
   }
 
   const drawMap = (error, geo, photos) => {
