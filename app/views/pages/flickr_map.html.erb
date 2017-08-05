@@ -22,6 +22,10 @@
   stroke: black;
 }
 
+circle.photo {
+  fill: red;
+}
+
 </style>
 <script>
   // let i = 1
@@ -117,40 +121,74 @@
             .call(yAxis) // adding y axis to chart
 
 
+   // Define Zoom Function Event Listener
+  function zoomFunction() {
+      d3.selectAll("path.geo")
+          .attr("transform", d3.event.transform);
+  }
 
-  // Map of manhattan
-  const mapGroup = svg.append('g')
+  // Define Zoom Behavior
+  const zoom = d3.zoom()
+      .scaleExtent([0.2, 10])
+      .on("zoom", zoomFunction);
+
+
+  const drawMap = (error, geo, photos) => {
+    const mapMaxWidth = 500
+    const mapMarginRight = 200
+
+    // Map of manhattan container
+    const mapGroup = svg.append('g')
                       .attr('transform', `translate(${height + margin.left}, 0)`)
                       .attr('class', 'map-group')
 
-  //  // Define Zoom Function Event Listener
-  // function zoomFunction() {
-  //     d3.selectAll("path")
-  //         .attr("transform", d3.event.transform);
-  // }
-
-  // // Define Zoom Behavior
-  // const zoom = d3.zoom()
-  //     .scaleExtent([0.2, 10])
-  //     .on("zoom", zoomFunction);
-  //
-
-  d3.json('/nyc/manhattan.geojson', (error, data) => {
-    const mapMaxWidth = 500
-    const mapMarginRight = 200
     const projection = d3.geoMercator()
                         .rotate([0, 0, 100])
-                        .fitExtent([[0, margin.top], [mapMaxWidth, window.innerHeight - margin.top]], data)
+                        .fitExtent([[0, margin.top], [mapMaxWidth, window.innerHeight - margin.top]], geo)
 
 
     const geoPath = d3.geoPath()
                     .projection(projection)
 
+    // Drawing the map
     mapGroup.append('path')
-              .attr('d', geoPath(data))
+              .attr('d', geoPath(geo))
+              .attr('class', 'geo')
               .attr('transform', `translate(${window.innerWidth - mapMaxWidth - mapMarginRight}, 0)`)
-  })
 
+
+    // Adding the circles
+    let a = {lng: -73.968285, lat: 40.785091}
+    let b = {lng: -74.004753, lat: 40.747964}
+    let coor = projection([-73.968285, 40.785091])
+    let gcoor = projection([b.lng, b.lat])
+    mapGroup.selectAll('circle.photo')
+            .data(photos.photos)
+            .enter().append('circle')
+                    .attr('cx', (d,i) => projection([d.lng, d.lat])[0])
+                    .attr('cy', (d,i) => projection([d.lng, d.lat])[1])
+                    .attr('r', 3)
+                    .attr('class', 'photo')
+
+
+    // console.log(' projection([73.9654, 40.7829])[0]',  projection([73.9654, 40.7829])[0])
+    // console.log(' projection([73.9654, 40.7829])[1]',  projection([73.9654, 40.7829])[1])
+    // // LNG FIRST, THEN LAT
+    // //
+    // let coor = projection([-73.968285, 40.785091])
+    // mapGroup.append('circle')
+    //                 .attr('cx', coor[0])
+    //                 .attr('cy', coor[1])
+    //                 .attr('r', 10)
+    //                 .attr('class', 'city')
+  }
+
+
+  // Load the data
+  d3.queue()
+    .defer(d3.json, '/nyc/manhattan.geojson')
+    .defer(d3.json, '/nyc/new-york-photos-park.json')
+    .await(drawMap)
 
 
 </script>
