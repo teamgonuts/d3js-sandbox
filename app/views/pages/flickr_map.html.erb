@@ -132,16 +132,6 @@ circle.photo {
   // Function called when zoom changes
   const minHeight = hourHeight/60 // height in pixels of one minute
 
-  window.onscroll = (e) => {
-    baseDate = Date.parse('2016-1-1 05:00') // reset
-    const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop
-
-    const seg = Math.floor(scrollTop / minHeight) // number of minutes to add
-    const topTime = baseDate.add(seg).minutes().toString('HH:mm')
-    const bottomTime = baseDate.add(hoursToShow).hours().toString('HH:mm')
-    console.log(`showing: ${topTime}-${bottomTime}`)
-  }
-
   const drawMap = (error, geo, photos) => {
     const mapMaxWidth = 500
     const groupMarginLeft = 0
@@ -175,9 +165,36 @@ circle.photo {
               .attr('transform', `translate(${groupMarginLeft}, 0)`)
 
 
-    // Adding the circles
-    mapGroup.selectAll('circle.photo')
-            .data(photos.photos)
+    window.onscroll = (e) => {
+      // baseDate = Date.parse('2016-1-1 05:00') // reset
+      // const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop
+
+      // const seg = Math.floor(scrollTop / minHeight) // number of minutes to add
+      //console.log ('seg', seg)
+      // const topTime = baseDate.add(seg).minutes().toString('HH:mm')
+      // const bottomTime = baseDate.add(hoursToShow).hours().toString('HH:mm')
+      // console.log(`showing: ${topTime}-${bottomTime}`)
+      //
+      //drawCircles()
+    }
+
+    // Returns an array of the photos within the date range
+    const validPhotos = () => {
+
+      const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop
+      const seg = Math.floor(scrollTop / minHeight) // number of minutes to add
+
+      good = photos.photos.filter((p) => {
+        return (p.hour < 12)
+      })
+
+      console.log('validPhotos.length', good.length)
+      return good
+    }
+
+    const drawCircles = () => {
+      mapGroup.selectAll('circle.photo')
+            .data(validPhotos)
             .enter().append('circle')
                     .attr('cx', (d,i) => projection([d.lng, d.lat])[0])
                     .attr('cy', (d,i) => projection([d.lng, d.lat])[1])
@@ -186,6 +203,10 @@ circle.photo {
                     .attr('class', 'photo')
                     .attr('transform', `translate(${groupMarginLeft}, 0)`)
 
+    }
+
+    drawCircles()
+
   }
 
 
@@ -193,7 +214,7 @@ circle.photo {
   // Load the data
   d3.queue()
     .defer(d3.json, '/nyc/manhattan-outline.geojson')
-    .defer(d3.json, '/nyc/new-york-photos-park.json')
+    .defer(d3.json, '/nyc/new-york-photos-hour.json')
     .await(drawMap)
 
 
