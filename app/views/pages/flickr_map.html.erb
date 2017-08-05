@@ -180,15 +180,19 @@ circle.photo {
     }
 
     const drawCircles = () => {
-      mapGroup.selectAll('circle.photo')
+      const mapData = mapGroup.selectAll('circle.photo')
             .data(validPhotos)
-            .enter().append('circle')
-                    .attr('cx', (d,i) => projection([d.lng, d.lat])[0])
-                    .attr('cy', (d,i) => projection([d.lng, d.lat])[1])
-                    .attr('r', 3)
-                    .attr('class', 'photo')
-                    .attr('transform', `translate(${groupMarginLeft}, 0)`)
-                    //.attr('clip-path', 'url(#manhattan-border)')
+
+
+      mapData.enter().append('circle')
+              .attr('cx', (d,i) => projection([d.lng, d.lat])[0])
+              .attr('cy', (d,i) => projection([d.lng, d.lat])[1])
+              .attr('r', 3)
+              .attr('class', 'photo')
+              .attr('transform', `translate(${groupMarginLeft}, 0)`)
+              //.attr('clip-path', 'url(#manhattan-border)')
+              //
+      mapData.exit().remove()
 
     }
 
