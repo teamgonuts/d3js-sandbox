@@ -164,6 +164,33 @@ circle.photo {
               .attr('class', 'geo')
               .attr('transform', `translate(${groupMarginLeft}, 0)`)
 
+    // Returns an array of the photos within the date range
+    const validPhotos = () => {
+
+      const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop
+      const seg = Math.floor(scrollTop / minHeight) // number of minutes to add
+
+      good = photos.photos.filter((p, i) => {
+        return (i < seg)
+        //return true
+      })
+
+      //console.log('validPhotos.length', good.length)
+      return good
+    }
+
+    const drawCircles = () => {
+      mapGroup.selectAll('circle.photo')
+            .data(validPhotos)
+            .enter().append('circle')
+                    .attr('cx', (d,i) => projection([d.lng, d.lat])[0])
+                    .attr('cy', (d,i) => projection([d.lng, d.lat])[1])
+                    .attr('r', 3)
+                    .attr('class', 'photo')
+                    .attr('transform', `translate(${groupMarginLeft}, 0)`)
+                    //.attr('clip-path', 'url(#manhattan-border)')
+
+    }
 
     window.onscroll = (e) => {
       // baseDate = Date.parse('2016-1-1 05:00') // reset
@@ -178,34 +205,7 @@ circle.photo {
       drawCircles()
     }
 
-    // Returns an array of the photos within the date range
-    const validPhotos = () => {
-
-      const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop
-      const seg = Math.floor(scrollTop / minHeight) // number of minutes to add
-
-      good = photos.photos.filter((p) => {
-        return (p.hour*60 < seg)
-      })
-
-      console.log('validPhotos.length', good.length)
-      return good
-    }
-
-    const drawCircles = () => {
-      mapGroup.selectAll('circle.photo')
-            .data(validPhotos)
-            .enter().append('circle')
-                    .attr('cx', (d,i) => projection([d.lng, d.lat])[0])
-                    .attr('cy', (d,i) => projection([d.lng, d.lat])[1])
-                    .attr('clip-path', 'url(#manhattan-border)')
-                    .attr('r', 3)
-                    .attr('class', 'photo')
-                    .attr('transform', `translate(${groupMarginLeft}, 0)`)
-
-    }
-
-    drawCircles()
+    //drawCircles()
 
   }
 
