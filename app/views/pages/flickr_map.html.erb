@@ -24,6 +24,8 @@
 
 circle.photo {
   fill: red;
+  opacity: 0.5;
+  stroke: none;
 }
 
 </style>
@@ -135,7 +137,7 @@ circle.photo {
 
   const drawMap = (error, geo, photos) => {
     const mapMaxWidth = 500
-    const mapMarginRight = 200
+    const groupMarginLeft = 500
 
     // Map of manhattan container
     const mapGroup = svg.append('g')
@@ -154,7 +156,7 @@ circle.photo {
     mapGroup.append('path')
               .attr('d', geoPath(geo))
               .attr('class', 'geo')
-              .attr('transform', `translate(${window.innerWidth - mapMaxWidth - mapMarginRight}, 0)`)
+              .attr('transform', `translate(${groupMarginLeft}, 0)`)
 
 
     // Adding the circles
@@ -169,6 +171,7 @@ circle.photo {
                     .attr('cy', (d,i) => projection([d.lng, d.lat])[1])
                     .attr('r', 3)
                     .attr('class', 'photo')
+                    .attr('transform', `translate(${groupMarginLeft}, 0)`)
 
 
     // console.log(' projection([73.9654, 40.7829])[0]',  projection([73.9654, 40.7829])[0])
