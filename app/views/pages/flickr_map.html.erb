@@ -152,6 +152,11 @@ circle.photo {
     const geoPath = d3.geoPath()
                     .projection(projection)
 
+    //Adding clipping
+    svg.append('defs').append('clipPath').attr('id', 'manhattan-border')
+        .append('path').datum(geo)
+        .attr('d', geoPath);
+
     // Drawing the map
     mapGroup.append('path')
               .attr('d', geoPath(geo))
@@ -169,6 +174,7 @@ circle.photo {
             .enter().append('circle')
                     .attr('cx', (d,i) => projection([d.lng, d.lat])[0])
                     .attr('cy', (d,i) => projection([d.lng, d.lat])[1])
+                    .attr('clip-path', 'url(#manhattan-border)')
                     .attr('r', 3)
                     .attr('class', 'photo')
                     .attr('transform', `translate(${groupMarginLeft}, 0)`)
