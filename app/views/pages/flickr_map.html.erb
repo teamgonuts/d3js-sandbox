@@ -32,7 +32,7 @@
 
 circle.photo {
   fill: red;
-  opacity: 0.5;
+  opacity: 0.1;
   stroke: none;
 }
 
@@ -54,7 +54,7 @@ circle.photo {
   const vizHeight = 24*hourHeight
   const width = vizHeight
 
-  const margin = {left: 0, right: 0, top: 20, bottom: 20}
+  const margin = {left: 0, right: 0, top: 50, bottom: 50}
 
   // create scale for axis
   let y = d3.scaleLinear()
@@ -163,6 +163,38 @@ circle.photo {
               .attr('d', geoPath(geo))
               .attr('class', 'geo')
               .attr('transform', `translate(${groupMarginLeft}, 0)`)
+
+    mapGroup.append("svg:image")
+     .attr('x', projection([-74.0466891, 40.6892534])[0])
+     .attr('y', projection([-74.0466891, 40.6892534])[1])
+     .attr('width', 32)
+     .attr('height', 32)
+     .attr('transform', `translate(-16, -32)`)
+     .attr("href","/nyc/statue-of-liberty.png")
+
+    mapGroup.append("svg:image")
+     .attr('x', projection([-73.9873197, 40.758895])[0])
+     .attr('y', projection([-73.9873197, 40.758895])[1])
+     .attr('width', 32)
+     .attr('height', 32)
+     .attr('transform', `translate(-16, -32)`)
+     .attr("href","/nyc/times-square-32.png")
+
+    mapGroup.append("svg:image")
+     .attr('x', projection([-73.9981622, 40.7058094])[0])
+     .attr('y', projection([-73.9981622, 40.7058094])[1])
+     .attr('width', 32)
+     .attr('height', 32)
+     .attr('transform', `translate(-16, -32)`)
+     .attr("href","/nyc/brooklyn-bridge-32.png")
+
+    mapGroup.append("svg:image")
+     .attr('x', projection([-74.0156334, 40.7055648])[0])
+     .attr('y', projection([-74.0156334, 40.7055648])[1])
+     .attr('width', 32)
+     .attr('height', 32)
+     .attr('transform', `translate(-16, -16)`)
+     .attr("href","/nyc/bull-32.png")
 
     // Returns an array of the photos within the date range
     const validPhotos = () => {
