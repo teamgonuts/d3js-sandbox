@@ -55,7 +55,7 @@ class FlickrPhoto < ApplicationRecord
 
     photos = [] # array of hashs
     FlickrPhoto.select(:id, :lat, :lng, :date_taken).where(city_name: city).each do |p|
-      photos << {lat: p.lat, lng: p.lng, hour: p.date_taken.hour, minute: p.date_taken.strftime('%M')}
+      photos << {lat: p.lat, lng: p.lng, hour: p.date_taken.hour, minute: p.date_taken.min}
     end
 
     tempHash = {
