@@ -54,7 +54,7 @@ class FlickrPhoto < ApplicationRecord
     require 'json'
 
     photos = [] # array of hashs
-    FlickrPhoto.select(:id, :lat, :lng, :date_taken).where(city_name: city).each do |p|
+    FlickrPhoto.select(:id, :lat, :lng, :date_taken).where(city_name: city).limit(25000).each do |p|
       photos << {lat: p.lat, lng: p.lng, hour: p.date_taken.hour, minute: p.date_taken.min}
     end
 
@@ -62,7 +62,7 @@ class FlickrPhoto < ApplicationRecord
         "photos" => photos,
         "count" => FlickrPhoto.where(city_name: city).count
     }
-    File.open("public/#{city.parameterize}-photos-hour-lg.json","w") do |f|
+    File.open("public/#{city.parameterize}-photos-hour-md.json","w") do |f|
       f.write(tempHash.to_json)
     end
   end
