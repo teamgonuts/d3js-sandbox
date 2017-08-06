@@ -31,7 +31,7 @@
 }
 
 circle.photo {
-  fill: red;
+  fill: url(#circle-gradient);
   opacity: 0.1;
   stroke: none;
 }
@@ -154,9 +154,24 @@ circle.photo {
                     .projection(projection)
 
     //Adding clipping
-    svg.append('defs').append('clipPath').attr('id', 'manhattan-border')
-        .append('path').datum(geo)
-        .attr('d', geoPath);
+    // svg.append('defs').append('clipPath').attr('id', 'manhattan-border')
+    //     .append('path').datum(geo)
+    //     .attr('d', geoPath);
+
+    // Adding circle gradient
+    svg.append('defs').append('radialGradient')
+        .attr('id', 'circle-gradient')
+        .selectAll("stop")
+        .data([
+            {offset: "0%", color: "#ff6565", opacity: 0.4},
+            {offset: "70%", color: "#ffbe65", opacity: 0.1},
+            {offset: "80%", color: "#ffe165", opacity: 0.05},
+            {offset: "100%", color: "#b3e57a", opacity: 0.0}
+          ])
+        .enter().append("stop")
+          .attr("offset", (d) => d.offset)
+          .attr("stop-color", (d) => d.color)
+          .attr("stop-opacity", (d) => d.opacity)
 
     // Drawing the map
     mapGroup.append('path')
@@ -246,7 +261,7 @@ circle.photo {
       mapData.enter().append('circle')
               .attr('cx', (d,i) => projection([d.lng, d.lat])[0])
               .attr('cy', (d,i) => projection([d.lng, d.lat])[1])
-              .attr('r', 3)
+              .attr('r', 20)
               .attr('class', 'photo')
               .attr('transform', `translate(${groupMarginLeft}, 0)`)
               //.attr('clip-path', 'url(#manhattan-border)') // SLOWS IT DOWN INCREDIBLY
@@ -256,18 +271,11 @@ circle.photo {
     }
 
     window.onscroll = (e) => {
-      // baseDate = Date.parse('2016-1-1 05:00') // reset
-      // const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop
-
-      // const seg = Math.floor(scrollTop / minHeight) // number of minutes to add
-      //console.log ('seg', seg)
-      // const topTime = baseDate.add(seg).minutes().toString('HH:mm')
-      // const bottomTime = baseDate.add(hoursToShow).hours().toString('HH:mm')
-      // console.log(`showing: ${topTime}-${bottomTime}`)
-      //
       drawCircles()
     }
 
+
+    // Initial draw
     drawCircles()
 
   }
@@ -276,8 +284,8 @@ circle.photo {
 
   // Load the data
   d3.queue()
-    .defer(d3.json, '/nyc/manhattan-outline.geojson')
-    .defer(d3.json, '/nyc/new-york-photos-hour-md.json')
+    .defer(d3.json, '/nyc/manhattan.geojson')
+    .defer(d3.json, '/nyc/new-york-photos-hour-lg.json')
     .await(drawMap)
 
 
