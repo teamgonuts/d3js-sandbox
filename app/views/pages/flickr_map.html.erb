@@ -169,17 +169,36 @@ circle.photo {
 
       const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop
       const seg = Math.floor(scrollTop / minHeight) // number of minutes to add
+      const minutes = seg % 60
       let hoursBottom = Math.floor(seg / 60) + 5
       hoursBottom = hoursBottom >= 24 ? hoursBottom - 24 : hoursBottom
       let hoursTop = hoursBottom + 2
       hoursTop = hoursTop >= 24 ? hoursTop - 24 : hoursTop
 
-      console.log('hours ' + hoursBottom + ' - ' + hoursTop)
+      //console.log(`range: ${hoursBottom}:${minutes} to ${hoursTop}:${minutes}`)
       good = photos.photos.filter((p, i) => {
-        if(hoursTop < hoursBottom) // when looking at 11pm and 1 am
-          return (p.hour <= hoursTop || p.hour >= hoursBottom)
-        else
-          return (p.hour >= hoursBottom && p.hour <= hoursTop)
+        if(hoursTop < hoursBottom) { // when looking at 11pm and 1 am
+          if(p.hour <= hoursTop || p.hour >= hoursBottom) {
+            if(p.hour == hoursTop) // need to check the minutes
+              return (p.minute <= minutes)
+            else if (p.hour == hoursBottom)
+              return (p.minute >= minutes)
+            else // I'm in an inbetween hour
+              return true
+          } else
+            return false
+        }
+        else {
+          if(p.hour >= hoursBottom && p.hour <= hoursTop) {
+            if(p.hour == hoursTop) // need to check the minutes
+              return (p.minute <= minutes)
+            else if (p.hour == hoursBottom)
+              return (p.minute >= minutes)
+            else // I'm in an inbetween hour
+              return true
+          } else
+            return false
+        }
         //return true
       })
 
