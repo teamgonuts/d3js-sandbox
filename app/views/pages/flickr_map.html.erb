@@ -169,18 +169,23 @@ circle.photo {
 
       const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop
       const seg = Math.floor(scrollTop / minHeight) // number of minutes to add
+      let minutes = seg % 60
       let hoursBottom = Math.floor(seg / 60) + 5
       hoursBottom = hoursBottom >= 24 ? hoursBottom - 24 : hoursBottom
-      let hoursTop = hoursBottom + 2
-      hoursTop = hoursTop >= 24 ? hoursTop - 24 : hoursTop
+      hoursBottom = hoursBottom < 10 ? `0${hoursBottom}` : hoursBottom
+      minutes = minutes < 10 ? `0${minutes}` : minutes
+      // let hoursTop = hoursBottom + 2
+      // hoursTop = hoursTop >= 24 ? hoursTop - 24 : hoursTop
 
-      console.log('hours ' + hoursBottom + ' - ' + hoursTop)
+      baseString = `2016-1-1 ${hoursBottom}:${minutes}`
+      let b = Date.parse(baseString)
+      let temp = Date.parse(baseString)
+      let t = temp.add(2).hours()
+
+      console.log('hours ' + b + ' -> ' + t )
       good = photos.photos.filter((p, i) => {
-        if(hoursTop < hoursBottom) // when looking at 11pm and 1 am
-          return (p.hour <= hoursTop || p.hour >= hoursBottom)
-        else
-          return (p.hour >= hoursBottom && p.hour <= hoursTop)
-        //return true
+          let d = Date.parse(`2016-1-1 ${hoursBottom}:${minutes}`)
+          return (b <= d && d <= t) // when looking at 11pm and 1 am
       })
 
       //console.log('validPhotos.length', good.length)
@@ -217,6 +222,7 @@ circle.photo {
       drawCircles()
     }
 
+    console.log('ready')
     drawCircles()
 
   }
@@ -226,7 +232,7 @@ circle.photo {
   // Load the data
   d3.queue()
     .defer(d3.json, '/nyc/manhattan-outline.geojson')
-    .defer(d3.json, '/nyc/new-york-photos-hour-lg.json')
+    .defer(d3.json, '/nyc/new-york-photos-hour.json')
     .await(drawMap)
 
 
