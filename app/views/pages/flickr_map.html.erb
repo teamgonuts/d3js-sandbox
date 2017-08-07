@@ -41,6 +41,13 @@ circle.photo {
 <div class="flickr-photo-wrapper">
   <!-- Full height header -->
   <div class="header">
+    <div class="text-container">
+      <div class="inner-container">
+        <h1 class="">WTF Are Tourists Taking Photos Of in NYC?</h1>
+        <h2 class=''>The interactive story of 55,000 photos</h2>
+        <p class="no-margin down-arrow"><i class="fa fa-chevron-down" aria-hidden="true"></i> </p>
+      </div>
+    </div>
   </div>
 
   <!-- Fixed map of manhattan -->
@@ -48,7 +55,7 @@ circle.photo {
   </div>
 
   <!-- Body of viz -->
-  <div class="viz"></div>
+  <div id="viz" class="viz"></div>
 
   <!-- call to action -->
   <div class="bottom-cta"></div>
@@ -183,47 +190,49 @@ circle.photo {
               .attr('transform', `translate(${groupMarginLeft}, 0)`)
 
     // Adding icons
-    mapGroup.append("svg:image")
-     .attr('x', projection([-74.0466891, 40.6892534])[0])
-     .attr('y', projection([-74.0466891, 40.6892534])[1])
-     .attr('width', 32)
-     .attr('height', 32)
-     .attr('transform', `translate(-16, -32)`)
-     .attr("href","/nyc/statue-of-liberty.png")
+    // mapGroup.append("svg:image")
+    //  .attr('x', projection([-74.0466891, 40.6892534])[0])
+    //  .attr('y', projection([-74.0466891, 40.6892534])[1])
+    //  .attr('width', 32)
+    //  .attr('height', 32)
+    //  .attr('transform', `translate(-16, -32)`)
+    //  .attr("href","/nyc/statue-of-liberty.png")
 
-    mapGroup.append("svg:image")
-     .attr('x', projection([-73.9873197, 40.758895])[0])
-     .attr('y', projection([-73.9873197, 40.758895])[1])
-     .attr('width', 32)
-     .attr('height', 32)
-     .attr('transform', `translate(-16, -32)`)
-     .attr("href","/nyc/times-square-32.png")
+    // mapGroup.append("svg:image")
+    //  .attr('x', projection([-73.9873197, 40.758895])[0])
+    //  .attr('y', projection([-73.9873197, 40.758895])[1])
+    //  .attr('width', 32)
+    //  .attr('height', 32)
+    //  .attr('transform', `translate(-16, -32)`)
+    //  .attr("href","/nyc/times-square-32.png")
 
-    mapGroup.append("svg:image")
-     .attr('x', projection([-73.9981622, 40.7058094])[0])
-     .attr('y', projection([-73.9981622, 40.7058094])[1])
-     .attr('width', 32)
-     .attr('height', 32)
-     .attr('transform', `translate(-16, -32)`)
-     .attr("href","/nyc/brooklyn-bridge-32.png")
+    // mapGroup.append("svg:image")
+    //  .attr('x', projection([-73.9981622, 40.7058094])[0])
+    //  .attr('y', projection([-73.9981622, 40.7058094])[1])
+    //  .attr('width', 32)
+    //  .attr('height', 32)
+    //  .attr('transform', `translate(-16, -32)`)
+    //  .attr("href","/nyc/brooklyn-bridge-32.png")
 
-    mapGroup.append("svg:image")
-     .attr('x', projection([-74.0156334, 40.7055648])[0])
-     .attr('y', projection([-74.0156334, 40.7055648])[1])
-     .attr('width', 32)
-     .attr('height', 32)
-     .attr('transform', `translate(-16, -16)`)
-     .attr("href","/nyc/bull-32.png")
+    // mapGroup.append("svg:image")
+    //  .attr('x', projection([-74.0156334, 40.7055648])[0])
+    //  .attr('y', projection([-74.0156334, 40.7055648])[1])
+    //  .attr('width', 32)
+    //  .attr('height', 32)
+    //  .attr('transform', `translate(-16, -16)`)
+    //  .attr("href","/nyc/bull-32.png")
 
     // Returns an array of the photos within the date range
     const validPhotos = () => {
 
-      let scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop
+      // get current scroll position of viz
+      scrollTop = $(window).scrollTop() - $("#viz").offset().top
 
-      scrollTop = scrollTop - window.innerHeight
-      if(scrollTop < 0 || scrollTop > vizHeight) // If i'm not in the visualization yet
+      // If i'm not in the visualization yet, do nothing
+      if(scrollTop < 0 || scrollTop > vizHeight)
         return []
 
+      // Oh boy, I should be visualizing stuff, time to do some math
       const seg = Math.floor(scrollTop / minHeight) // number of minutes to add
       const minutes = seg % 60
       let hoursBottom = Math.floor(seg / 60) + 5
@@ -231,7 +240,7 @@ circle.photo {
       let hoursTop = hoursBottom + 2
       hoursTop = hoursTop >= 24 ? hoursTop - 24 : hoursTop
 
-      // console.log(`range: ${hoursBottom}:${minutes} to ${hoursTop}:${minutes}`)
+      console.log(`range: ${hoursBottom}:${minutes} to ${hoursTop}:${minutes}`)
       good = photos.photos.filter((p, i) => {
         if(hoursTop < hoursBottom) { // when looking at 11pm and 1 am
           if(p.hour <= hoursTop || p.hour >= hoursBottom) {

@@ -5,6 +5,7 @@
 html,
 body {
   margin: 0;
+  font-family: 'Montserrat', sans-serif;
 }
 
 
@@ -24,6 +25,39 @@ body {
     background: linear-gradient(to bottom, #304155, #506e90);
   }
 
+  .text-container {
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+    padding-top: 32vh;
+    .inner-container {
+      padding-right: 350px; // Width of manhattan graphic
+      padding-left: 50px;
+    }
+  }
+
+  h1, h2, p, text {
+    text-shadow: 1px 1px 3px black;
+    color: white;
+  }
+
+  h1 {
+    margin:0px;
+    font-size: 3.2rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  .down-arrow {
+    font-size: 24px;
+
+    i {
+      display: block;
+    }
+  }
+
   .bottom-cta {
     padding-top: 200px;
     height: 100vh;
@@ -33,5 +67,11 @@ body {
 
 .viz {
   background: linear-gradient(to bottom, #506e90 5%, #7696cd 15%, #b0cff0 40%, #7696cd 55%, #506e90 68%, #260040 80%, #240638 100%);
+}
+
+
+.white-on-image {
+  text-shadow: 1px 1px 3px black;
+  color: white;
 }
 
