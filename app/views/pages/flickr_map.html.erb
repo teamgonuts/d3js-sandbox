@@ -37,6 +37,21 @@ circle.photo {
 }
 
 </style>
+
+<div class="flickr-photo-wrapper">
+  <!-- Full height header -->
+  <div class="header">
+  </div>
+
+  <!-- Fixed map of manhattan -->
+  <div class="map-group-container">
+  </div>
+
+  <!-- Body of viz -->
+  <div class="viz"></div>
+</div>
+
+
 <script>
   // Create time series values
   let baseDate = Date.parse('2016-1-1 05:00')
@@ -87,10 +102,9 @@ circle.photo {
 
 
   // Drawing this shit, add the base SVG
-  const svg = d3.select('body').append('svg')
+  const svg = d3.select('body .viz').append('svg')
               .attr('height', vizHeight)
               .attr('width', '100%')
-              .attr('class', 'black-gradient')
 
 
 
@@ -207,7 +221,7 @@ circle.photo {
       let hoursTop = hoursBottom + 2
       hoursTop = hoursTop >= 24 ? hoursTop - 24 : hoursTop
 
-      //console.log(`range: ${hoursBottom}:${minutes} to ${hoursTop}:${minutes}`)
+      console.log(`range: ${hoursBottom}:${minutes} to ${hoursTop}:${minutes}`)
       good = photos.photos.filter((p, i) => {
         if(hoursTop < hoursBottom) { // when looking at 11pm and 1 am
           if(p.hour <= hoursTop || p.hour >= hoursBottom) {
@@ -279,9 +293,5 @@ circle.photo {
     .defer(d3.json, '/nyc/manhattan-outline.geojson')
     .defer(d3.json, '/nyc/new-york-photos-hour-md.json')
     .await(drawMap)
-
-
 </script>
 
-<div class="map-group-container">
-</div>

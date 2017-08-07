@@ -16,3 +16,16 @@ body {
   background: linear-gradient(to right, #28343b 0%,#828c95 25%,#b5bdc8 45%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#28343b', endColorstr='#b5bdc8',GradientType=1 ); /* IE6-9 */
 }
+
+.flickr-photo-wrapper {
+  .header {
+    height: 100vh;
+    background-color: #506e90;
+    background: linear-gradient(to bottom, #304155, #506e90);
+  }
+}
+
+.viz {
+  background: linear-gradient(to bottom, #506e90 5%, #e2e2b8 15%, #ffffff 40%, #e2e2b8 55%, #506e90 68%, #260040 80%, #11001d 100%);
+}
+
