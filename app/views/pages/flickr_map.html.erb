@@ -46,7 +46,7 @@ circle.photo {
 
   <div class="header">
     <!-- Full height header -->
-    <section class="title full-height">
+    <section class="title full-height text-center">
       <div class="text-container">
         <div class="inner-container">
           <h1 class="">WTF Are Tourists Taking Photos Of in NYC?</h1>
@@ -60,7 +60,12 @@ circle.photo {
     </section>
 
     <section class="how-its-made full-height">
-      <p id="test" class="story hidden">Story - SHIT LOAD OF STUFF</p>
+      <div class="text-container">
+        <div class="inner-container hidden story">
+          <h3 class="">Once upon a time...</h3>
+          <p>...there was an island called Manhattan. Every day, 4 million people flood its streets. Some of them have cameras. And some of those people with cameras upload their photos to Flickr. </p>
+        </div>
+      </div>
     </section>
 
     <section class="know-manhattan full-height"></section>
@@ -82,8 +87,14 @@ circle.photo {
       .on('enter', (el) => {
         console.log('in view');
         $(el).removeClass('hidden').addClass('fadeInLeft animated')
-        console.log(el)
+        $(el).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
+          $(el).removeClass('fadeInLeft animated')
+        })
       })
+      .on('exit', el => {
+        console.log('out')
+        $(el).addClass('hidden')
+      });
 
   // Create time series values
   let baseDate = Date.parse('2016-1-1 05:00')

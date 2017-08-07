@@ -22,15 +22,18 @@ body {
   height: 100vh;
 }
 
+.text-center {
+  text-align: center;
+}
+
 .hidden {
-  width:0px;
-  overflow: hidden;
+  opacity:0;
 }
 
 .flickr-photo-wrapper {
   .header {
     background-color: #506e90;
-    background: linear-gradient(to bottom, #304155, #506e90);
+    background: linear-gradient(to bottom, #001329, #506e90);
   }
 
   section.full-height {
@@ -39,16 +42,24 @@ body {
 
 
   .text-container {
-    width: 100%;
+    width: 600px;
     max-width: 100%;
-    text-align: center;
-    padding-top: 32vh;
+    padding-top: 30vh;
     .inner-container {
-      padding-right: 350px; // Width of manhattan graphic
+      // padding-right: 350px; // Width of manhattan graphic
     }
   }
 
-  h1, h2, p, text {
+  section.title {
+    .text-container {
+      width: 100%;
+      .inner-container {
+        padding-right: 350px; // Width of manhattan graphic
+      }
+    }
+  }
+
+  h1, h2, h3, p, text {
     text-shadow: 1px 1px 3px black;
     color: white;
   }
@@ -62,28 +73,35 @@ body {
     font-size: 2rem;
   }
 
+  h3 {
+    font-size: 3.5rem;
+    font-family: 'Berkshire Swash', cursive;
+    margin-top: 0;
+    margin-bottom: 25px;
+  }
+
+  p {
+    font-size: 1.5rem;
+  }
+
   .down-arrow {
     font-size: 24px;
-    margin-top: 50px;
+    margin-top: 75px;
 
     i {
       display: block;
     }
   }
 
-  p {
-    font-size: 36px;
-  }
-
   .bottom-cta {
     padding-top: 200px;
     height: 100vh;
-    background: linear-gradient(to bottom, #240638, #11001d);
+    background: linear-gradient(to bottom, #03001b, #010242);
   }
 }
 
 .viz {
-  background: linear-gradient(to bottom, #506e90 5%, #7696cd 15%, #b0cff0 40%, #7696cd 55%, #506e90 68%, #260040 80%, #240638 100%);
+  background: linear-gradient(to bottom, #506e90 5%, #7696cd 15%, #b0cff0 40%, #7696cd 55%, #506e90 68%, #001329 80%, #03001b 100%);
 }
 
 
