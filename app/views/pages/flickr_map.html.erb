@@ -39,23 +39,30 @@ circle.photo {
 </style>
 
 <div class="flickr-photo-wrapper">
-  <!-- Full height header -->
-  <div class="header">
-    <div class="text-container">
-      <div class="inner-container">
-        <h1 class="">WTF Are Tourists Taking Photos Of in NYC?</h1>
-        <h2 class=''>The interactive story of 55,000 photos</h2>
-        <p class="no-margin down-arrow"><i class="fa fa-chevron-down" aria-hidden="true"></i> </p>
-      </div>
-    </div>
-  </div>
 
   <!-- Fixed map of manhattan -->
   <div class="map-group-container">
   </div>
 
+  <div class="header">
+    <!-- Full height header -->
+    <section class="title full-height">
+      <div class="text-container">
+        <div class="inner-container">
+          <h1 class="">WTF Are Tourists Taking Photos Of in NYC?</h1>
+          <h2 class=''>The interactive story of 55,000 photos</h2>
+          <p class="no-margin down-arrow"><i class="fa fa-chevron-down" aria-hidden="true"></i> </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="how-its-made full-height"></section>
+
+    <section class="know-manhattan full-height"></section>
+  </div>
+
   <!-- Body of viz -->
-  <div id="viz" class="viz"></div>
+  <section id="viz" class="viz"></section>
 
   <!-- call to action -->
   <div class="bottom-cta"></div>
@@ -240,7 +247,7 @@ circle.photo {
       let hoursTop = hoursBottom + 2
       hoursTop = hoursTop >= 24 ? hoursTop - 24 : hoursTop
 
-      console.log(`range: ${hoursBottom}:${minutes} to ${hoursTop}:${minutes}`)
+      //console.log(`range: ${hoursBottom}:${minutes} to ${hoursTop}:${minutes}`)
       good = photos.photos.filter((p, i) => {
         if(hoursTop < hoursBottom) { // when looking at 11pm and 1 am
           if(p.hour <= hoursTop || p.hour >= hoursBottom) {
