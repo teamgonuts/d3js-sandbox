@@ -72,7 +72,7 @@ circle.photo {
       </div>
     </section>
 
-    <section class="full-height">
+    <section class="intro full-height">
       <div class="once-upon text-container">
         <div class="inner-container hidden story">
           <h3 class="">Once upon a time...</h3>
@@ -90,6 +90,7 @@ circle.photo {
     </section>
 
     <section class="know-manhattan full-height">
+      <span class="scroll-helper"></span>
       <div class="text-container">
         <div class="inner-container center-map">
           <p> Test </p>
@@ -121,22 +122,19 @@ circle.photo {
       .on('exit', el => {
         console.log('out')
         $(el).addClass('hidden')
-        if($(el).hasClass('trigger-center-map'))
-          $('.map-group-container').addClass('center')
       })
 
   // THIS CAUSES ISSUES AT slow zoom
   // inView.threshold(0.9)
 
-  inView('.center-map')
-      .on('enter', (el) => {
-        console.log('in view map');
-        $('.map-group-container').addClass('map-group-container')
+  inView('section.know-manhattan .scroll-helper')
+      .on('enter', el => {
+        $('.map-group-container').addClass('center')
       })
       .on('exit', el => {
-        console.log('out view map');
         $('.map-group-container').removeClass('center')
       })
+
 
 
   // Create time series values
