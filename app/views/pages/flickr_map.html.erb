@@ -38,7 +38,7 @@ circle.photo {
 
 </style>
 
-<div class="flickr-photo-wrapper">
+<div id="story-wrapper" class="flickr-photo-wrapper">
 
   <!-- Fixed map of manhattan -->
   <div class="map-group-container">
@@ -51,12 +51,17 @@ circle.photo {
         <div class="inner-container">
           <h1 class="">WTF Are Tourists Taking Photos Of in NYC?</h1>
           <h2 class=''>The interactive story of 55,000 photos</h2>
-          <p class="no-margin down-arrow"><i class="fa fa-chevron-down" aria-hidden="true"></i> </p>
+          <p class="no-margin down-arrow animated swing">
+            Scroll to Start
+            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+          </p>
         </div>
       </div>
     </section>
 
-    <section class="how-its-made full-height"></section>
+    <section class="how-its-made full-height">
+      <p id="slide-in" style="display:none;">Story</p>
+    </section>
 
     <section class="know-manhattan full-height"></section>
   </div>

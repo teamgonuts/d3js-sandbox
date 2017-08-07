@@ -56,10 +56,18 @@ body {
 
   .down-arrow {
     font-size: 24px;
+    margin-top: 50px;
 
     i {
       display: block;
     }
+    -webkit-animation-duration: 1.7s;
+    -moz-animation-duration: 1.7s;
+    -o-animation-duration: 1.7s;
+    animation-duration: 1.7s;
+
+    -webkit-animation-delay: 5s;
+    -webkit-animation-iteration-count: 1;
   }
 
   .bottom-cta {

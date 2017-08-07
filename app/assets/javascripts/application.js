@@ -14,4 +14,4 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require date
-//= require_tree .
+//= require jquery.scrollstory.min
