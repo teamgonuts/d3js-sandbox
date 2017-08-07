@@ -22,10 +22,19 @@ body {
   height: 100vh;
 }
 
+.hidden {
+  width:0px;
+  overflow: hidden;
+}
+
 .flickr-photo-wrapper {
   .header {
     background-color: #506e90;
     background: linear-gradient(to bottom, #304155, #506e90);
+  }
+
+  section.full-height {
+    padding-left: 50px;
   }
 
 
@@ -36,7 +45,6 @@ body {
     padding-top: 32vh;
     .inner-container {
       padding-right: 350px; // Width of manhattan graphic
-      padding-left: 50px;
     }
   }
 
@@ -61,13 +69,10 @@ body {
     i {
       display: block;
     }
-    -webkit-animation-duration: 1.7s;
-    -moz-animation-duration: 1.7s;
-    -o-animation-duration: 1.7s;
-    animation-duration: 1.7s;
+  }
 
-    -webkit-animation-delay: 5s;
-    -webkit-animation-iteration-count: 1;
+  p {
+    font-size: 36px;
   }
 
   .bottom-cta {

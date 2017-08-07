@@ -1,0 +1,13 @@
+<div id="container">
+  <div class="story"><h2>Story 1</h2><p>...</p></div>
+  <div class="story"><h2>Story 2</h2><p>...</p></div>
+</div>
+
+
+<script>
+  inView('#container')
+      .on('enter', (el) => {console.log('in view');})
+      .on('exit', el => {
+          el.style.opacity = 0.5;
+      });
+</script>

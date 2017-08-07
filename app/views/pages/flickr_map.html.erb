@@ -38,7 +38,7 @@ circle.photo {
 
 </style>
 
-<div id="story-wrapper" class="flickr-photo-wrapper">
+<div class="flickr-photo-wrapper">
 
   <!-- Fixed map of manhattan -->
   <div class="map-group-container">
@@ -51,7 +51,7 @@ circle.photo {
         <div class="inner-container">
           <h1 class="">WTF Are Tourists Taking Photos Of in NYC?</h1>
           <h2 class=''>The interactive story of 55,000 photos</h2>
-          <p class="no-margin down-arrow animated swing">
+          <p class="no-margin down-arrow">
             Scroll to Start
             <i class="fa fa-chevron-down" aria-hidden="true"></i>
           </p>
@@ -60,7 +60,7 @@ circle.photo {
     </section>
 
     <section class="how-its-made full-height">
-      <p id="slide-in" style="display:none;">Story</p>
+      <p id="test" class="story hidden">Story - SHIT LOAD OF STUFF</p>
     </section>
 
     <section class="know-manhattan full-height"></section>
@@ -75,6 +75,16 @@ circle.photo {
 
 
 <script>
+
+  // Scroll triggers
+  // docs: https://github.com/camwiegert/in-view
+  inView('.story')
+      .on('enter', (el) => {
+        console.log('in view');
+        $(el).removeClass('hidden').addClass('fadeInLeft animated')
+        console.log(el)
+      })
+
   // Create time series values
   let baseDate = Date.parse('2016-1-1 05:00')
   let timeSeriesDates = [baseDate.toString('yyyy-MM-dd HH:mm')]
