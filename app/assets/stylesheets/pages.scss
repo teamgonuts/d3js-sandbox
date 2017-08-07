@@ -19,7 +19,7 @@ body {
 }
 
 .full-height {
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .text-center {
@@ -28,6 +28,10 @@ body {
 
 .hidden {
   opacity:0;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
 }
 
 .flickr-photo-wrapper {
@@ -44,7 +48,7 @@ body {
   .text-container {
     width: 600px;
     max-width: 100%;
-    padding-top: 30vh;
+    padding-top: 45vh;
     .inner-container {
       // padding-right: 350px; // Width of manhattan graphic
     }
@@ -53,10 +57,15 @@ body {
   section.title {
     .text-container {
       width: 100%;
+      padding-top: 30vh;
       .inner-container {
         padding-right: 350px; // Width of manhattan graphic
       }
     }
+  }
+
+  .text-container.once-upon {
+    padding-top: 24vh;
   }
 
   h1, h2, h3, p, text {

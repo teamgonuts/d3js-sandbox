@@ -59,11 +59,18 @@ circle.photo {
       </div>
     </section>
 
-    <section class="how-its-made full-height">
-      <div class="text-container">
+    <section class="full-height">
+      <div class="once-upon text-container">
         <div class="inner-container hidden story">
           <h3 class="">Once upon a time...</h3>
           <p>...there was an island called Manhattan. Every day, 4 million people flood its streets. Some of them have cameras. And some of those people with cameras upload their photos to Flickr. </p>
+        </div>
+      </div>
+
+      <div class="text-container">
+        <div class="inner-container hidden story">
+          <h3 class="">A team of nerds...</h3>
+          <p>...called TripHappy wanted to see if they could make those photos into something cool. They took 55,000 photos taken in 2016 and compressed them into one day. </p>
         </div>
       </div>
     </section>
@@ -94,7 +101,9 @@ circle.photo {
       .on('exit', el => {
         console.log('out')
         $(el).addClass('hidden')
-      });
+      })
+
+  inView.threshold(0.5)
 
   // Create time series values
   let baseDate = Date.parse('2016-1-1 05:00')
