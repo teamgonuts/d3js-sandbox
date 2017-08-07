@@ -213,7 +213,12 @@ circle.photo {
     // Returns an array of the photos within the date range
     const validPhotos = () => {
 
-      const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop
+      let scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop
+
+      scrollTop = scrollTop - window.innerHeight
+      if(scrollTop < 0) // If i'm not in the visualization yet
+        return []
+
       const seg = Math.floor(scrollTop / minHeight) // number of minutes to add
       const minutes = seg % 60
       let hoursBottom = Math.floor(seg / 60) + 5
@@ -221,7 +226,7 @@ circle.photo {
       let hoursTop = hoursBottom + 2
       hoursTop = hoursTop >= 24 ? hoursTop - 24 : hoursTop
 
-      console.log(`range: ${hoursBottom}:${minutes} to ${hoursTop}:${minutes}`)
+      // console.log(`range: ${hoursBottom}:${minutes} to ${hoursTop}:${minutes}`)
       good = photos.photos.filter((p, i) => {
         if(hoursTop < hoursBottom) { // when looking at 11pm and 1 am
           if(p.hour <= hoursTop || p.hour >= hoursBottom) {
