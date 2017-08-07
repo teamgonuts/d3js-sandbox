@@ -38,11 +38,16 @@ body {
   .header {
     background-color: #506e90;
     background: linear-gradient(to bottom, #001329, #506e90);
+    section, section .inner-container {
+      position: relative;
+    }
   }
 
   section.full-height {
     padding-left: 50px;
   }
+
+
 
 
   .text-container {
@@ -67,11 +72,11 @@ body {
   section.know-manhattan {
     height: 200vh;
     position: relative;
+  }
 
-    .scroll-helper {
-      position: absolute;
-      margin-top: 100vh;
-    }
+  .scroll-helper {
+    position: absolute;
+    top: 50%;
   }
 
   .text-container.once-upon {

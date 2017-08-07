@@ -75,6 +75,7 @@ circle.photo {
     <section class="intro full-height">
       <div class="once-upon text-container">
         <div class="inner-container hidden story">
+          <span class="scroll-helper"></span>
           <h3 class="">Once upon a time...</h3>
           <p>...there was an island called Manhattan. Every day, 4 million people flood its streets. Some of them have cameras. And some of those people with cameras upload their photos to Flickr. </p>
         </div>
@@ -82,6 +83,7 @@ circle.photo {
 
       <div class="text-container">
         <div class="inner-container hidden story trigger-center-map">
+          <span class="scroll-helper"></span>
           <h3 class="">A team of nerds...</h3>
           <p class="margin-bottom-sm">...called TripHappy wanted to see if they could make those photos into something cool. They took 55,000 photos taken in 2016 and compressed them into one day. </p>
           <p> But first, a quick refresher on the Geography of Manhattan...</p>
@@ -111,17 +113,17 @@ circle.photo {
 
   // Scroll triggers
   // docs: https://github.com/camwiegert/in-view
-  inView('.story')
+  inView('.story .scroll-helper')
       .on('enter', (el) => {
         console.log('in view');
-        $(el).removeClass('hidden').addClass('fadeInLeft animated')
-        $(el).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
-          $(el).removeClass('fadeInLeft animated')
+        $(el).parent().removeClass('hidden').addClass('fadeInLeft animated')
+        $(el).parent().one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
+          $(el).parent().removeClass('fadeInLeft animated')
         })
       })
       .on('exit', el => {
         console.log('out')
-        $(el).addClass('hidden')
+        $(el).parent().addClass('hidden')
       })
 
   // THIS CAUSES ISSUES AT slow zoom
