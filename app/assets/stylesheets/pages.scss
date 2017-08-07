@@ -26,6 +26,10 @@ body {
   text-align: center;
 }
 
+.margin-bottom-sm {
+  margin-bottom: 15px;
+}
+
 .hidden {
   opacity:0;
   -webkit-transition: all 0.5s ease;
@@ -62,6 +66,10 @@ body {
         padding-right: 350px; // Width of manhattan graphic
       }
     }
+  }
+
+  section.know-manhattan {
+    height: 200vh;
   }
 
   .text-container.once-upon {
