@@ -30,6 +30,22 @@
   min-width: 400px;
 }
 
+/*.map-group-container svg {
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.map-group-container.center {
+  right:0;
+  min-width: 100%;
+}
+
+.map-group-container.center svg{
+  width: 45%;
+}*/
+
 circle.photo {
   fill: red;
   opacity: 0.1;
@@ -71,11 +87,18 @@ circle.photo {
         <div class="inner-container hidden story">
           <h3 class="">A team of nerds...</h3>
           <p>...called TripHappy wanted to see if they could make those photos into something cool. They took 55,000 photos taken in 2016 and compressed them into one day. </p>
+          <p> But first, a quick refresher on the Geography of Manhattan...</p>
         </div>
       </div>
     </section>
 
-    <section class="know-manhattan full-height"></section>
+    <section class="know-manhattan full-height">
+      <div class="text-container">
+        <div class="inner-container center-map">
+          <p> Test </p>
+        </div>
+      </div>
+    </section>
   </div>
 
   <!-- Body of viz -->
@@ -103,7 +126,18 @@ circle.photo {
         $(el).addClass('hidden')
       })
 
-  inView.threshold(0.5)
+  inView.threshold(0.9)
+
+  // inView('.center-map')
+  //     .on('enter', (el) => {
+  //       console.log('in view map');
+  //       $('.map-group-container').addClass('center')
+  //     })
+  //     .on('exit', el => {
+  //       console.log('out view map');
+  //       $('.map-group-container').removeClass('center')
+  //     })
+
 
   // Create time series values
   let baseDate = Date.parse('2016-1-1 05:00')
